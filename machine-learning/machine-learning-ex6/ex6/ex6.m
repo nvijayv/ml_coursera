@@ -139,24 +139,24 @@ pause;
 load('ex6data3.mat');
 
 % Try different SVM Parameters here
-CValues = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]
-sigmaValues = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]
+[C, sigma] = dataset3Params(X, y, Xval, yval);
 
-#[C, sigma] = dataset3Params(X, y, Xval, yval);
-observations = []
-for C = CValues
-for sigma = sigmaValues
+%Cs = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+%sigmas = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+%observations = []
+
+%for C = Cs
+%for sigma = sigmas
 % Train the SVM
-model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
-predictions = svmPredict(model, Xval)
-error = mean(double(predictions ~= yval))
-observations(end+1, :) = [C, sigma, error]
-endfor
-endfor
-disp(observations)
+model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
+%predictions = svmPredict(model, Xval);
+%error = mean(double(predictions ~= yval));
+%observations(end+1, :) = [C, sigma, error];
+visualizeBoundary(X, y, model);
+%endfor
+%endfor
 
-#visualizeBoundary(X, y, model);
-
+%display(observations)
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
